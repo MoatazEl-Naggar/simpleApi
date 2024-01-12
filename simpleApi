@@ -1,0 +1,31 @@
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// Sample user data
+const users = [
+  { id: 1, name: 'John Doe', email: 'john@example.com' },
+  { id: 2, name: 'Jane Doe', email: 'jane@example.com' },
+  { id: 3, name: 'Bob Smith', email: 'bob@example.com' }
+];
+
+// Endpoint to get details of all users
+app.get('/api/users', (req, res) => {
+  res.json(users);
+});
+
+// Endpoint to get details of a specific user by ID
+app.get('/api/users/:id', (req, res) => {
+  const userId = parseInt(req.params.id);
+  const user = users.find(u => u.id === userId);
+
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+  } else {
+    res.json(user);
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
